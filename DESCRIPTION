@@ -1,0 +1,11 @@
+Package: Rawscli
+Title: R Bindings for 'awscli'
+Version: 0.0.1
+Maintainer: Whit Armstrong <armstrong.whit@gmail.com>
+Author: Whit Armstrong <armstrong.whit@gmail.com>
+Description: R package for interfacing with Amazon Web Services (see <http://aws.amazon.com/cli/> for more information).
+License: GPL-3
+Depends: rjson
+SystemRequirements: awscli (Debian package awscli, Fedora package awscli)
+URL: http://github.com/armstrtw/Rawscli
+BugReports: http://github.com/armstrtw/Rawscli/issues
