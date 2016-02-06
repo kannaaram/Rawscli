@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+
+if [ $# -ne 1 ]
+  then
+      echo "Please provide output directory."
+      exit 1
+fi
+
+
+ODIR=$1
+
+./list.services | while read -r SERVICE ; do
+    echo "Processing SERVICE: $SERVICE"
+    ./list.commands $SERVICE | while read -r CMD ; do
+        echo "Processing COMMAND: $CMD"
+        ./list.parameters $SERVICE $CMD > $ODIR/$SERVICE.$CMD.awsdoc
+    done
+done

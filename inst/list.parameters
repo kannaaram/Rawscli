@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]
+  then
+      echo "Need two arguments"
+      exit 1
+fi
+
+SERVICE=$1
+CMD=$2
+
+## parameters
+aws $SERVICE $CMD help |col -bx|sed -n -e '/SYNOPSIS/,/OPTIONS/p'|sed  -e '1,2d' -e '$d' -e '/^$/d' -e  's/^[ \t]*//;s/[ \t]*$//' -e 's/\[//' -e 's/\]//' -e 's/--//g'

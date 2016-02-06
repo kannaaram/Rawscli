@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+  then
+    echo "No arguments supplied"
+fi
+
+SERVICE=$1
+
+## commands
+aws $SERVICE help |col -bx|sed -n -e '/AVAILABLE COMMANDS/,/$d/p'|sed  -e '1d' -e '$d' -e '/^$/d' -e '/help/d' -e 's/^       o //'
