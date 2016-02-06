@@ -1,5 +1,5 @@
 ###########################################################################
-## Copyright (C) 2015  Whit Armstrong                                    ##
+## Copyright (C) 2016  Whit Armstrong                                    ##
 ##                                                                       ##
 ## This program is free software: you can redistribute it and#or modify  ##
 ## it under the terms of the GNU General Public License as published by  ##
@@ -14,18 +14,6 @@
 ## You should have received a copy of the GNU General Public License     ##
 ## along with this program.  If not, see <http:##www.gnu.org#licenses#>. ##
 ###########################################################################
-
---debug (boolean)
---endpoint-url (string)
---no-verify-ssl (boolean)
---no-paginate (boolean)
---output (string)
---query (string)
---profile (string)
---region (string)
---version (string)
---color (string)
---no-sign-request (boolean)
 
 .aws <- function(subcommand,debug=NULL,endpoint.url=NULL,no.verify.ssl=NULL,no.paginate=NULL,output=NULL,query=NULL,profile=NULL,region=NULL,version=NULL,color=NULL,no.sign.request=NULL) {
 
