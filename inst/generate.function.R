@@ -3,10 +3,12 @@
 require(methods)
 
 args <- commandArgs(trailingOnly=TRUE)
-if(length(args)!=2) stop("Need arguments: parameter.file output.file")
+if(length(args)!=4) stop("Need arguments: SERVICE CMD parameter.file output.file")
 
-parameter.file <- args[1]
-output.file <- args[2]
+SERVICE <- args[1]
+CMD <- args[2]
+parameter.file <- args[3]
+output.file <- args[4]
 
 con <- file(parameter.file, "r", blocking = FALSE)
 params <- readLines(con)
@@ -60,10 +62,6 @@ generate.fun <- function(service,cmd,param.list) {
     paste(function.name,"<- function",function.formals,"{\n",function.body,"\n}\n",collapse="\n")
     ##fromJSON(paste(x,collapse=""))
 }
-
-service.cmd <- strsplit(basename(parameter.file),"\\.")
-SERVICE <- service.cmd[[1]][1]
-CMD <- service.cmd[[1]][2]
 
 fun <- generate.fun(SERVICE,CMD,params)
 cat(fun,file=output.file,append=TRUE)
