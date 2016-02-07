@@ -2,10 +2,14 @@
 
 ./list.services | while read -r SERVICE ; do
     echo "Processing SERVICE: $SERVICE"
+    echo "removing existing file: ../R/$SERVICE.R"
+    rm -f ../R/$SERVICE.R
     ./list.commands $SERVICE | while read -r CMD ; do
-        echo "Processing COMMAND: $CMD"
+        echo "Processing COMMAND: $SERVICE / $CMD"
         OFILE=`mktemp --suffix=.awsdoc`
         ./list.parameters $SERVICE $CMD > $OFILE
         Rscript ./generate.function.R $SERVICE $CMD $OFILE ../R/$SERVICE.R
     done
+    echo "formatting service file: ../R/$SERVICE.R"
+    emacs -batch ../R/$SERVICE.R --eval '(indent-region (point-min) (point-max) nil)' -f save-buffer
 done
