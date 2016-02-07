@@ -17,7 +17,7 @@ do.either.or.check <- function(args) {
     sprintf("if(%s && %s) stop(\"please set either %s or %s\")",args[1],args[2],args[1],args[2])
 }
 
-generate.fun <- function(SERVICE,CMD,param.list) {
+generate.fun <- function(service,cmd,param.list) {
     either.or <- grepl("\\|",param.list)
     value.type <- grepl("<value>",param.list)
     normal.boolean <- !(either.or||value.type)
@@ -42,7 +42,7 @@ generate.fun <- function(SERVICE,CMD,param.list) {
             args <- gsub(" <value>$","",param)
             rargs <- gsub("-",".",args)
             formals[[length(formals)+1]] <- paste(rargs[1],"NULL",sep="=")
-            aws.call[[length(aws.call)+1]] <- sprintf("ifelse(!is.null(%s),--%s %s,\"\")",rargs[1],args[1],rargs[1])
+            aws.call[[length(aws.call)+1]] <- sprintf("ifelse(!is.null(%s),paste(\"--%s\",%s),\"\")",rargs[1],args[1],rargs[1])
         }
         if(normal.boolean) {
             formals[[length(formals)+1]] <- paste(rargs[1],"FALSE",sep="=")
@@ -50,16 +50,20 @@ generate.fun <- function(SERVICE,CMD,param.list) {
         }
     }
 
-    function.name <- paste(SERVICE,CMD,sep=".")
+    function.name <- paste(service,gsub("-",".",cmd),sep=".")
     function.formals <- sprintf("(%s)",paste(formals,collapse=","))
-    ##function.body <- paste(c(paste(unlist(error.checking),collapse="\n"),aws.call,collapse="\n")),collapse="\n")
-    function.body <- paste(c(unlist(error.checking),unlist(aws.call)),collapse="\n")
+
+    aws.cmd <- sprintf("\"%s %s %s\"","aws",service, cmd)
+    aws.cmd.with.params <- sprintf("cmd <- paste(%s,\n%s)",aws.cmd, paste(aws.call,collapse=",\n"))
+
+    function.body <- paste(c(unlist(error.checking),aws.cmd.with.params,"system(cmd,intern=TRUE)"),collapse="\n")
     paste(function.name,"<- function",function.formals,"{\n",function.body,"\n}\n",collapse="\n")
+    ##fromJSON(paste(x,collapse=""))
 }
 
 service.cmd <- strsplit(basename(parameter.file),"\\.")
 SERVICE <- service.cmd[[1]][1]
 CMD <- service.cmd[[1]][2]
 
-fun <- generate.fun(SERVICE,gsub("-",".",CMD),params)
-cat(fun,file=output.file)
+fun <- generate.fun(SERVICE,CMD,params)
+cat(fun,file=output.file,append=TRUE)
