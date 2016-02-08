@@ -19,36 +19,43 @@ do.either.or.check <- function(args) {
     sprintf("if(%s && %s) stop(\"please set either %s or %s\")",args[1],args[2],args[1],args[2])
 }
 
-generate.fun <- function(service,cmd,param.list) {
-    either.or <- grepl("\\|",param.list)
-    value.type <- grepl("<value>",param.list)
-    normal.boolean <- !(either.or||value.type)
+generate.error.checking <- function(param.list) {
+    ## no error checking for either/or value types
+    either.or <- grepl("\\|",param.list) & (!grepl("<value>",param.list))
+    if(any(either.or)) {
+        ans <- lapply(param.list[either.or],function(param) {
+            args <- gsub(" ","",unlist(strsplit(param,"\\|")))
+            rargs <- gsub("-",".",args)
+            do.either.or.check(rargs)
+        })
+    } else {
+        ans <- list()
+    }
+    ans
+}
 
-    ##formals <- gsub(" ","",gsub("<value>","",unlist(strsplit(params,"\\|"))))
+generate.fun <- function(service,cmd,param.list) {
+    error.checking <- generate.error.checking(param.list)
+    param.list <- unlist(lapply(param.list,strsplit,split="\\|"))
+    param.list <- gsub("^ ","",param.list)
+    param.list <- gsub(" $","",param.list)
+    value.type <- grepl("<value>",param.list)
+
     formals <- list()
-    error.checking <- list()
     aws.call <- list()
 
     for(i in 1:length(param.list)) {
         param <- param.list[i]
-        if(either.or[i]) {
-            args <- gsub(" ","",unlist(strsplit(param,"\\|")))
-            rargs <- gsub("-",".",args)
-            error.checking[[length(error.checking)+1]] <- do.either.or.check(rargs)
-            formals[[length(formals)+1]] <- paste(rargs[1],"FALSE",sep="=")
-            formals[[length(formals)+1]] <- paste(rargs[2],"FALSE",sep="=")
-            aws.call[[length(aws.call)+1]] <- sprintf("ifelse(%s,\"--%s\",\"\")",rargs[1],args[1])
-            aws.call[[length(aws.call)+1]] <- sprintf("ifelse(%s,\"--%s\",\"\")",rargs[2],args[2])
-        }
         if(value.type[i]) {
-            args <- gsub(" <value>$","",param)
+            args <- gsub(" <value>.*$","",param)
             rargs <- gsub("-",".",args)
             formals[[length(formals)+1]] <- paste(rargs[1],"NULL",sep="=")
             aws.call[[length(aws.call)+1]] <- sprintf("ifelse(!is.null(%s),paste(\"--%s\",%s),\"\")",rargs[1],args[1],rargs[1])
-        }
-        if(normal.boolean) {
+        } else {
+            args <- param
+            rargs <- gsub("-",".",args)
             formals[[length(formals)+1]] <- paste(rargs[1],"FALSE",sep="=")
-            aws.call[[length(aws.call)+1]] <- sprintf("ifelse(%s,--%s,\"\")",rargs[1],args[1])
+            aws.call[[length(aws.call)+1]] <- sprintf("ifelse(%s,\"--%s\",\"\")",rargs[1],args[1])
         }
     }
 
