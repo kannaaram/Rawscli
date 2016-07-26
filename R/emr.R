@@ -1,13 +1,13 @@
-emr.add.instance.groups <- function (cluster.id=NULL,instance.groups <value> <value>...=NULL) {
+emr.add.instance.groups <- function (cluster.id=NULL,instance.groups=NULL) {
     cmd <- paste("aws emr add-instance-groups",
                  ifelse(!is.null(cluster.id),paste("--cluster-id",cluster.id),""),
-                 ifelse(!is.null(instance.groups <value> <value>...),paste("--instance-groups <value> <value>...",instance.groups <value> <value>...),""))
+                 ifelse(!is.null(instance.groups),paste("--instance-groups <value> <value>...",instance.groups),""))
     system(cmd,intern=TRUE) 
 }
-emr.add.steps <- function (cluster.id=NULL,steps <value> <value>...=NULL) {
+emr.add.steps <- function (cluster.id=NULL,steps=NULL) {
     cmd <- paste("aws emr add-steps",
                  ifelse(!is.null(cluster.id),paste("--cluster-id",cluster.id),""),
-                 ifelse(!is.null(steps <value> <value>...),paste("--steps <value> <value>...",steps <value> <value>...),""))
+                 ifelse(!is.null(steps),paste("--steps <value> <value>...",steps),""))
     system(cmd,intern=TRUE) 
 }
 emr.add.tags <- function (resource.id=NULL,tags=NULL,cli.input.json=NULL) {
@@ -17,20 +17,20 @@ emr.add.tags <- function (resource.id=NULL,tags=NULL,cli.input.json=NULL) {
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-emr.create.cluster <- function (release.label<value>=FALSE,ami.version<value>=FALSE,release.label <value> | ami.version=NULL,instance.type<value>=FALSE,instance.groups<value>=FALSE,instance.type <value> | instance.groups=NULL,instance.count=NULL,auto.terminate=FALSE,no.auto.terminate=FALSE,service.role=NULL,configurations=NULL,name=NULL,log.uri=NULL,additional.info=NULL,ec2.attributes=NULL,termination.protected=FALSE,no.termination.protected=FALSE,visible.to.all.users=FALSE,no.visible.to.all.users=FALSE,enable.debugging=FALSE,no.enable.debugging=FALSE,tags=NULL,applications=NULL,emrfs=NULL,bootstrap.actions=NULL,steps=NULL,restore.from.hbase.backup=NULL) {
-    if(release.label<value> && ami.version<value>) stop("please set either release.label<value> or ami.version<value>")
-    if(instance.type<value> && instance.groups<value>) stop("please set either instance.type<value> or instance.groups<value>")
+emr.create.cluster <- function(release.label=FALSE,ami.version=FALSE,instance.type=FALSE,instance.groups=FALSE,instance.count=NULL,auto.terminate=FALSE,no.auto.terminate=FALSE,service.role=NULL,configurations=NULL,name=NULL,log.uri=NULL,additional.info=NULL,ec2.attributes=NULL,termination.protected=FALSE,no.termination.protected=FALSE,visible.to.all.users=FALSE,no.visible.to.all.users=FALSE,enable.debugging=FALSE,no.enable.debugging=FALSE,tags=NULL,applications=NULL,emrfs=NULL,bootstrap.actions=NULL,steps=NULL,restore.from.hbase.backup=NULL) {
+    if(release.label && ami.version) stop("please set either release.label<value> or ami.version<value>")
+    if(instance.type && instance.groups) stop("please set either instance.type<value> or instance.groups<value>")
     if(auto.terminate && no.auto.terminate) stop("please set either auto.terminate or no.auto.terminate")
     if(termination.protected && no.termination.protected) stop("please set either termination.protected or no.termination.protected")
     if(visible.to.all.users && no.visible.to.all.users) stop("please set either visible.to.all.users or no.visible.to.all.users")
     if(enable.debugging && no.enable.debugging) stop("please set either enable.debugging or no.enable.debugging")
     cmd <- paste("aws emr create-cluster",
-                 ifelse(release.label<value>,"--release-label<value>",""),
-                 ifelse(ami.version<value>,"--ami-version<value>",""),
-                 ifelse(!is.null(release.label <value> | ami.version),paste("--release-label <value> | ami-version",release.label <value> | ami.version),""),
-                 ifelse(instance.type<value>,"--instance-type<value>",""),
-                 ifelse(instance.groups<value>,"--instance-groups<value>",""),
-                 ifelse(!is.null(instance.type <value> | instance.groups),paste("--instance-type <value> | instance-groups",instance.type <value> | instance.groups),""),
+                 ifelse(release.label,"--release-label<value>",""),
+                 ifelse(ami.version,"--ami-version<value>",""),
+                 ifelse(!is.null(release.label | ami.version),paste("--release-label <value> | ami-version",release.label | ami.version),""),
+                 ifelse(instance.type,"--instance-type<value>",""),
+                 ifelse(instance.groups,"--instance-groups<value>",""),
+                 ifelse(!is.null(instance.type | instance.groups),paste("--instance-type <value> | instance-groups",instance.type | instance.groups),""),
                  ifelse(!is.null(instance.count),paste("--instance-count",instance.count),""),
                  ifelse(auto.terminate,"--auto-terminate",""),
                  ifelse(no.auto.terminate,"--no-auto-terminate",""),
@@ -90,10 +90,10 @@ emr.get <- function (cluster.id=NULL,key.pair.file=NULL,src=NULL,dest=NULL) {
                  ifelse(!is.null(dest),paste("--dest",dest),""))
     system(cmd,intern=TRUE) 
 }
-emr.install.applications <- function (cluster.id=NULL,applications <value> <value>...=NULL) {
+emr.install.applications <- function (cluster.id=NULL,applications=NULL) {
     cmd <- paste("aws emr install-applications",
                  ifelse(!is.null(cluster.id),paste("--cluster-id",cluster.id),""),
-                 ifelse(!is.null(applications <value> <value>...),paste("--applications <value> <value>...",applications <value> <value>...),""))
+                 ifelse(!is.null(applications),paste("--applications <value> <value>...",applications),""))
     system(cmd,intern=TRUE) 
 }
 emr.list.instances <- function (cluster.id=NULL,instance.group.id=NULL,instance.group.types=NULL,cli.input.json=NULL,starting.token=NULL,max.items=NULL) {
@@ -178,8 +178,8 @@ emr.ssh <- function (cluster.id=NULL,key.pair.file=NULL,command=NULL) {
                  ifelse(!is.null(command),paste("--command",command),""))
     system(cmd,intern=TRUE) 
 }
-emr.terminate.clusters <- function (cluster.ids <value> <value>...=NULL) {
+emr.terminate.clusters <- function (cluster.ids=NULL) {
     cmd <- paste("aws emr terminate-clusters",
-                 ifelse(!is.null(cluster.ids <value> <value>...),paste("--cluster-ids <value> <value>...",cluster.ids <value> <value>...),""))
+                 ifelse(!is.null(cluster.ids),paste("--cluster-ids <value> <value>...",cluster.ids),""))
     system(cmd,intern=TRUE) 
 }

@@ -4,3 +4,6 @@
 *.rc
 *.o
 *.so
+.Rproj.user
+Rawscli.Rproj
+*.Rbuildignore

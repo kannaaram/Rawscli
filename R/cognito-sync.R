@@ -1,10 +1,10 @@
-cognito-sync.bulk.publish <- function (identity.pool.id=NULL,cli.input.json=NULL) {
+cognito.sync.bulk.publish <- function (identity.pool.id=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync bulk-publish",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.delete.dataset <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,cli.input.json=NULL) {
+cognito.sync.delete.dataset <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync delete-dataset",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(identity.id),paste("--identity-id",identity.id),""),
@@ -12,7 +12,7 @@ cognito-sync.delete.dataset <- function (identity.pool.id=NULL,identity.id=NULL,
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.describe.dataset <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,cli.input.json=NULL) {
+cognito.sync.describe.dataset <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync describe-dataset",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(identity.id),paste("--identity-id",identity.id),""),
@@ -20,38 +20,38 @@ cognito-sync.describe.dataset <- function (identity.pool.id=NULL,identity.id=NUL
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.describe.identity.pool.usage <- function (identity.pool.id=NULL,cli.input.json=NULL) {
+cognito.sync.describe.identity.pool.usage <- function (identity.pool.id=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync describe-identity-pool-usage",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.describe.identity.usage <- function (identity.pool.id=NULL,identity.id=NULL,cli.input.json=NULL) {
+cognito.sync.describe.identity.usage <- function (identity.pool.id=NULL,identity.id=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync describe-identity-usage",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(identity.id),paste("--identity-id",identity.id),""),
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.get.bulk.publish.details <- function (identity.pool.id=NULL,cli.input.json=NULL) {
+cognito.sync.get.bulk.publish.details <- function (identity.pool.id=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync get-bulk-publish-details",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.get.cognito.events <- function (identity.pool.id=NULL,cli.input.json=NULL) {
+cognito.sync.get.cognito.events <- function (identity.pool.id=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync get-cognito-events",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.get.identity.pool.configuration <- function (identity.pool.id=NULL,cli.input.json=NULL) {
+cognito.sync.get.identity.pool.configuration <- function (identity.pool.id=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync get-identity-pool-configuration",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.list.datasets <- function (identity.pool.id=NULL,identity.id=NULL,next.token=NULL,max.results=NULL,cli.input.json=NULL) {
+cognito.sync.list.datasets <- function (identity.pool.id=NULL,identity.id=NULL,next.token=NULL,max.results=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync list-datasets",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(identity.id),paste("--identity-id",identity.id),""),
@@ -60,14 +60,14 @@ cognito-sync.list.datasets <- function (identity.pool.id=NULL,identity.id=NULL,n
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.list.identity.pool.usage <- function (next.token=NULL,max.results=NULL,cli.input.json=NULL) {
+cognito.sync.list.identity.pool.usage <- function (next.token=NULL,max.results=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync list-identity-pool-usage",
                  ifelse(!is.null(next.token),paste("--next-token",next.token),""),
                  ifelse(!is.null(max.results),paste("--max-results",max.results),""),
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.list.records <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,last.sync.count=NULL,next.token=NULL,max.results=NULL,sync.session.token=NULL,cli.input.json=NULL) {
+cognito.sync.list.records <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,last.sync.count=NULL,next.token=NULL,max.results=NULL,sync.session.token=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync list-records",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(identity.id),paste("--identity-id",identity.id),""),
@@ -79,7 +79,7 @@ cognito-sync.list.records <- function (identity.pool.id=NULL,identity.id=NULL,da
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.register.device <- function (identity.pool.id=NULL,identity.id=NULL,platform=NULL,token=NULL,cli.input.json=NULL) {
+cognito.sync.register.device <- function (identity.pool.id=NULL,identity.id=NULL,platform=NULL,token=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync register-device",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(identity.id),paste("--identity-id",identity.id),""),
@@ -88,14 +88,14 @@ cognito-sync.register.device <- function (identity.pool.id=NULL,identity.id=NULL
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.set.cognito.events <- function (identity.pool.id=NULL,events=NULL,cli.input.json=NULL) {
+cognito.sync.set.cognito.events <- function (identity.pool.id=NULL,events=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync set-cognito-events",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(events),paste("--events",events),""),
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.set.identity.pool.configuration <- function (identity.pool.id=NULL,push.sync=NULL,cognito.streams=NULL,cli.input.json=NULL) {
+cognito.sync.set.identity.pool.configuration <- function (identity.pool.id=NULL,push.sync=NULL,cognito.streams=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync set-identity-pool-configuration",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(push.sync),paste("--push-sync",push.sync),""),
@@ -103,7 +103,7 @@ cognito-sync.set.identity.pool.configuration <- function (identity.pool.id=NULL,
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.subscribe.to.dataset <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,device.id=NULL,cli.input.json=NULL) {
+cognito.sync.subscribe.to.dataset <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,device.id=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync subscribe-to-dataset",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(identity.id),paste("--identity-id",identity.id),""),
@@ -112,7 +112,7 @@ cognito-sync.subscribe.to.dataset <- function (identity.pool.id=NULL,identity.id
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.unsubscribe.from.dataset <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,device.id=NULL,cli.input.json=NULL) {
+cognito.sync.unsubscribe.from.dataset <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,device.id=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync unsubscribe-from-dataset",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(identity.id),paste("--identity-id",identity.id),""),
@@ -121,7 +121,7 @@ cognito-sync.unsubscribe.from.dataset <- function (identity.pool.id=NULL,identit
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""))
     system(cmd,intern=TRUE) 
 }
-cognito-sync.update.records <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,device.id=NULL,record.patches=NULL,sync.session.token=NULL,client.context=NULL,cli.input.json=NULL) {
+cognito.sync.update.records <- function (identity.pool.id=NULL,identity.id=NULL,dataset.name=NULL,device.id=NULL,record.patches=NULL,sync.session.token=NULL,client.context=NULL,cli.input.json=NULL) {
     cmd <- paste("aws cognito-sync update-records",
                  ifelse(!is.null(identity.pool.id),paste("--identity-pool-id",identity.pool.id),""),
                  ifelse(!is.null(identity.id),paste("--identity-id",identity.id),""),
