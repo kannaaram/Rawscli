@@ -116,7 +116,7 @@ dynamodb.query <- function (table.name=NULL,index.name=NULL,select=NULL,attribut
                  ifelse(!is.null(max.items),paste("--max-items",max.items),""))
     system(cmd,intern=TRUE) 
 }
-dynamodb.scan <- function (table.name=NULL,index.name=NULL,attributes.to.get=NULL,select=NULL,scan.filter=NULL,conditional.operator=NULL,return.consumed.capacity=NULL,total.segments=NULL,segment=NULL,projection.expression=NULL,filter.expression=NULL,expression.attribute.names=NULL,expression.attribute.values=NULL,consistent.read=FALSE,no.consistent.read=FALSE,cli.input.json=NULL,starting.token=NULL,page.size=NULL,max.items=NULL) {
+dynamodb.scan <- function (table.name=NULL,index.name=NULL,attributes.to.get=NULL,select=NULL,scan.filter=NULL,conditional.operator=NULL,return.consumed.capacity=NULL,total.segments=NULL,segment=NULL,projection.expression=NULL,filter.expression=NULL,expression.attribute.names=NULL,expression.attribute.values=NULL,consistent.read=FALSE,no.consistent.read=FALSE,cli.input.json=NULL,starting.token=NULL,page.size=NULL,max.items=NULL,query=NULL) {
     if(consistent.read && no.consistent.read) stop("please set either consistent.read or no.consistent.read")
     cmd <- paste("aws dynamodb scan",
                  ifelse(!is.null(table.name),paste("--table-name",table.name),""),
@@ -137,7 +137,8 @@ dynamodb.scan <- function (table.name=NULL,index.name=NULL,attributes.to.get=NUL
                  ifelse(!is.null(cli.input.json),paste("--cli-input-json",cli.input.json),""),
                  ifelse(!is.null(starting.token),paste("--starting-token",starting.token),""),
                  ifelse(!is.null(page.size),paste("--page-size",page.size),""),
-                 ifelse(!is.null(max.items),paste("--max-items",max.items),""))
+                 ifelse(!is.null(max.items),paste("--max-items",max.items),""),
+                 ifelse(!is.null(query),paste("--query", query), ""))
     system(cmd,intern=TRUE) 
 }
 dynamodb.update.item <- function (table.name=NULL,key=NULL,attribute.updates=NULL,expected=NULL,conditional.operator=NULL,return.values=NULL,return.consumed.capacity=NULL,return.item.collection.metrics=NULL,update.expression=NULL,condition.expression=NULL,expression.attribute.names=NULL,expression.attribute.values=NULL,cli.input.json=NULL) {
